@@ -1,0 +1,29 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["extendedIndexes"]
+}
+
+model List {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  task        Task[]
+
+  @@map("list")
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  list        List     @relation(fields: [listId], references: [id])
+  listId      Int
+  title       String
+  description String?
+  completed   Boolean  @default(false)
+
+  @@map("task")
+}

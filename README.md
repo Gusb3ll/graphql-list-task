@@ -36,6 +36,14 @@ yarn dev
 
 Express server will be running at ```localhost:3333``` and you can query the grahpql server using Apollo Server Explorer at ```localhost:3333/graphql```
 
+Testing
+
+```bash
+# Make sure you have your 'test' database setup live
+
+yarn test
+```
+
 ## Production
 
 Built & Start the application

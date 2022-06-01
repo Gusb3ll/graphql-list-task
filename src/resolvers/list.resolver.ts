@@ -25,7 +25,7 @@ export class listResolver {
   }
 
   @Query(() => getListByIdResponse)
-  async getListById(@Arg('listId') listId: number): Promise<getListByIdResponse> {
+  async getListById(@Arg('listId', () => Number) listId: number): Promise<getListByIdResponse> {
     try {
       const data = await listService.getListById(listId)
       return { message: 'Successful', data }
@@ -36,7 +36,7 @@ export class listResolver {
   }
 
   @Mutation(() => createListResponse)
-  async createList(@Arg('title') title: string, @Arg('description') description?: string): Promise<createListResponse> {
+  async createList(@Arg('title', () => String) title: string, @Arg('description', () => String) description?: string): Promise<createListResponse> {
     try {
       const data = await listService.createList(title, description)
       if (data)
@@ -50,7 +50,7 @@ export class listResolver {
   }
 
   @Mutation(() => createTaskResponse)
-  async createTask(@Arg('listId') listId: number, @Arg('title') title: string, @Arg('description') description?: string): Promise<createTaskResponse> {
+  async createTask(@Arg('listId', () => Number) listId: number, @Arg('title', () => String) title: string, @Arg('description', () => String) description?: string): Promise<createTaskResponse> {
     try {
       const data = await listService.createTask(listId, title, description)
       if (data)
@@ -64,7 +64,7 @@ export class listResolver {
   }
 
   @Mutation(() => updateTaskResponse)
-  async updateTask(@Arg('taskId') taskId: number, @Arg('title') title?: string, @Arg('description') description?: string, @Arg('completed') completed?: boolean): Promise<updateTaskResponse> {
+  async updateTask(@Arg('taskId', () => Number) taskId: number, @Arg('title', () => String) title?: string, @Arg('description', () => String) description?: string, @Arg('completed', () => Boolean) completed?: boolean): Promise<updateTaskResponse> {
     try {
       const data = await listService.updateTask(taskId, title, description, completed)
       if (data)
@@ -78,7 +78,7 @@ export class listResolver {
   }
 
   @Mutation(() => moveTaskResponse)
-  async moveTask(@Arg('fromId') fromId: number, @Arg('toId') toId: number): Promise<moveTaskResponse> {
+  async moveTask(@Arg('fromId', () => Number) fromId: number, @Arg('toId', () => Number) toId: number): Promise<moveTaskResponse> {
     try {
       await listService.moveTask(fromId, toId)
       return { message: 'Successful' }

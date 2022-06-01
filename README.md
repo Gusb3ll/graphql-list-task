@@ -36,6 +36,8 @@ yarn dev
 
 Express server will be running at ```localhost:3333``` and you can query the grahpql server using Apollo Server Explorer at ```localhost:3333/graphql```
 
+[Query & Mutation collection](https://studio.apollographql.com/graph/My-Graph-grk1ml/explorer?collectionId=1e873094-cf5a-4b14-99bb-e6208557bf3c&focusCollectionId=1e873094-cf5a-4b14-99bb-e6208557bf3c&overlay=view-collection-details&variant=current)
+
 Testing
 
 ```bash

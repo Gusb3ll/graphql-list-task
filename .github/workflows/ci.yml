@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [16]
+
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@master
+
+      - name: Setup node 🏗
+        uses: actions/setup-node@v3.2.0
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'yarn'
+
+      - name: Install dependencies 👨🏻‍💻
+        run: yarn --immutable
+
+      - name: Run linter 👀
+        run: yarn lint
+
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+  
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [16]
+
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@master
+
+      - name: Setup node 🏗
+        uses: actions/setup-node@v3.2.0
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'yarn'
+
+      - name: Install dependencies 👨🏻‍💻
+        run: yarn --immutable
+
+      - name: Build ⚒️
+        run: yarn build
+    
+  test:
+    name: Run test
+    needs:
+      - build
+    runs-on: ${{ matrix.os }}
+  
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [16]
+
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@master
+
+      - name: Setup node 🏗
+        uses: actions/setup-node@v3.1.1
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'yarn'
+
+      - name: Setup mysql 📙
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          mysql root password: 12345
+
+      - name: Install dependencies 👨🏻‍💻
+        run: yarn --immutable
+
+      - name: Push database 💾
+        run: yarn prisma db push
+        env:
+          DATABASE_URL: mysql://root:12345@localhost:3306/listgql
+
+      - name: Run test 🧪
+        run: yarn test
+        env:
+          DATABASE_URL: mysql://root:12345@localhost:3306/listgql

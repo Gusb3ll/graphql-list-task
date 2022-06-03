@@ -16,7 +16,7 @@
     "coverage": "vitest --coverage"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "0.25.0",
+    "@antfu/eslint-config": "0.25.1",
     "@commitlint/cli": "17.0.2",
     "@commitlint/config-conventional": "17.0.2",
     "@prisma/client": "3.14.0",

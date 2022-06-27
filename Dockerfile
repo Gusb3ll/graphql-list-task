@@ -1,4 +1,4 @@
-FROM node:16 AS builder
+FROM node:18 AS builder
 
 WORKDIR /usr/app
 
@@ -11,7 +11,7 @@ RUN yarn install
 
 RUN yarn build
 
-FROM node:16
+FROM node:18
 
 COPY --from=builder /usr/app/node_modules ./node_modules
 COPY --from=builder /usr/app/tsconfig*.json ./
